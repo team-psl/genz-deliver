@@ -1,0 +1,44 @@
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { GeistMono } from "geist/font/mono"
+import { Analytics } from "@vercel/analytics/next"
+import { Suspense } from "react"
+import { AuthProvider } from "@/lib/auth"
+import { ThemeProvider } from "@/lib/theme-provider"
+import { I18nProvider } from "@/lib/i18n-provider"
+import "./globals.css"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
+
+export const metadata: Metadata = {
+  title: "Pathao Courier - Fast & Reliable Parcel Delivery",
+  description:
+    "Send parcels anywhere with Pathao Courier. Fast, reliable, and affordable delivery service with real-time tracking.",
+  generator: "v0.app",
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={`font-sans ${inter.variable} ${GeistMono.variable}`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <I18nProvider>
+            <AuthProvider>
+              <Suspense fallback={null}>{children}</Suspense>
+            </AuthProvider>
+          </I18nProvider>
+        </ThemeProvider>
+        <Analytics />
+      </body>
+    </html>
+  )
+}
