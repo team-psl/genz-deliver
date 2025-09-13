@@ -1,0 +1,63 @@
+{
+  "header": {
+    "home": "হোম",
+    "track": "পার্সেল ট্র্যাক করুন",
+    "pricing": "মূল্য",
+    "contact": "যোগাযোগ",
+    "signin": "সাইন ইন",
+    "booknow": "এখনই বুক করুন"
+  },
+  "hero": {
+    "title": "দ্রুত, নির্ভরযোগ্য",
+    "titleHighlight": "পার্সেল ডেলিভারি",
+    "subtitle": "পাঠাও কুরিয়ারের সাথে শহরের যেকোনো জায়গায় আপনার পার্সেল পাঠান। রিয়েল-টাইম ট্র্যাকিং, সাশ্রয়ী মূল্য এবং ২৪/৭ গ্রাহক সহায়তা।",
+    "googleSignin": "গুগল দিয়ে সাইন ইন করুন",
+    "facebookSignin": "ফেসবুক দিয়ে সাইন ইন করুন",
+    "dashboard": "ড্যাশবোর্ডে যান"
+  },
+  "features": {
+    "fastDelivery": "দ্রুত ডেলিভারি",
+    "fastDeliveryDesc": "একই দিনে ডেলিভারি উপলব্ধ",
+    "secure": "১০০% নিরাপদ",
+    "secureDesc": "নিরাপদ এবং নির্ভরযোগ্য ডেলিভারি",
+    "tracking": "রিয়েল-টাইম ট্র্যাকিং",
+    "trackingDesc": "আপনার পার্সেল লাইভ ট্র্যাক করুন"
+  },
+  "dashboard": {
+    "title": "ড্যাশবোর্ড",
+    "welcome": "স্বাগতম",
+    "createOrder": "নতুন অর্ডার তৈরি করুন",
+    "totalOrders": "মোট অর্ডার",
+    "delivered": "ডেলিভার হয়েছে",
+    "inTransit": "পথে আছে",
+    "pending": "অপেক্ষমাণ",
+    "recentOrders": "সাম্প্রতিক অর্ডার",
+    "searchOrders": "অর্ডার খুঁজুন..."
+  },
+  "order": {
+    "title": "নতুন অর্ডার তৈরি করুন",
+    "subtitle": "নতুন ডেলিভারি অর্ডার তৈরি করতে বিস্তারিত পূরণ করুন",
+    "recipientDetails": "প্রাপকের বিবরণ",
+    "deliveryDetails": "ডেলিভারির বিবরণ",
+    "recipientPhone": "প্রাপকের ফোন",
+    "recipientSecondaryPhone": "প্রাপকের দ্বিতীয় ফোন",
+    "recipientName": "প্রাপকের নাম",
+    "recipientAddress": "প্রাপকের ঠিকানা",
+    "deliveryArea": "ডেলিভারি এলাকা",
+    "specialInstructions": "বিশেষ নির্দেশনা",
+    "deliveryType": "ডেলিভারির ধরন",
+    "totalWeight": "মোট ওজন",
+    "quantity": "পরিমাণ",
+    "amountToCollect": "সংগ্রহ করার পরিমাণ",
+    "itemDescription": "পণ্যের বিবরণ ও দাম",
+    "createOrder": "অর্ডার তৈরি করুন"
+  },
+  "common": {
+    "loading": "লোড হচ্ছে...",
+    "search": "খুঁজুন",
+    "cancel": "বাতিল",
+    "save": "সংরক্ষণ",
+    "edit": "সম্পাদনা",
+    "delete": "মুছুন"
+  }
+}

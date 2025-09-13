@@ -1,0 +1,63 @@
+{
+  "header": {
+    "home": "Home",
+    "track": "Track Parcel",
+    "pricing": "Pricing",
+    "contact": "Contact Us",
+    "signin": "Sign In",
+    "booknow": "Book Now"
+  },
+  "hero": {
+    "title": "Fast, Reliable",
+    "titleHighlight": "Parcel Delivery",
+    "subtitle": "Send your parcels anywhere in the city with Pathao Courier. Track in real-time, affordable pricing, and 24/7 customer support.",
+    "googleSignin": "Sign in with Google",
+    "facebookSignin": "Sign in with Facebook",
+    "dashboard": "Go to Dashboard"
+  },
+  "features": {
+    "fastDelivery": "Fast Delivery",
+    "fastDeliveryDesc": "Same day delivery available",
+    "secure": "100% Secure",
+    "secureDesc": "Safe and reliable delivery",
+    "tracking": "Real-time Tracking",
+    "trackingDesc": "Track your parcel live"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "createOrder": "Create New Order",
+    "totalOrders": "Total Orders",
+    "delivered": "Delivered",
+    "inTransit": "In Transit",
+    "pending": "Pending",
+    "recentOrders": "Recent Orders",
+    "searchOrders": "Search orders..."
+  },
+  "order": {
+    "title": "Create New Order",
+    "subtitle": "Fill in the details to create a new delivery order",
+    "recipientDetails": "Recipient Details",
+    "deliveryDetails": "Delivery Details",
+    "recipientPhone": "Recipient's Phone",
+    "recipientSecondaryPhone": "Recipient's Secondary Phone",
+    "recipientName": "Recipient's Name",
+    "recipientAddress": "Recipient's Address",
+    "deliveryArea": "Delivery Area",
+    "specialInstructions": "Special Instructions",
+    "deliveryType": "Delivery Type",
+    "totalWeight": "Total Weight",
+    "quantity": "Quantity",
+    "amountToCollect": "Amount to Collect",
+    "itemDescription": "Item Description & Price",
+    "createOrder": "Create Order"
+  },
+  "common": {
+    "loading": "Loading...",
+    "search": "Search",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}

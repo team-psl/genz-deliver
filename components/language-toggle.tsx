@@ -10,17 +10,23 @@ export function LanguageToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Languages className="h-[1.2rem] w-[1.2rem]" />
-          <span className="sr-only">Toggle language</span>
+        <Button variant="outline" size="sm" className="gap-2">
+          <Languages className="h-4 w-4" />
+          <span className="text-xs">{language === "en" ? "EN" : "বাং"}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setLanguage("en")}>
+      <DropdownMenuContent align="end" className="z-50 min-w-[120px] bg-background border border-border shadow-md">
+        <DropdownMenuItem 
+          onClick={() => setLanguage("en")}
+          className="cursor-pointer hover:bg-accent"
+        >
           <span className="mr-2">🇺🇸</span>
           English
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage("bn")}>
+        <DropdownMenuItem 
+          onClick={() => setLanguage("bn")}
+          className="cursor-pointer hover:bg-accent"
+        >
           <span className="mr-2">🇧🇩</span>
           বাংলা
         </DropdownMenuItem>

@@ -16,10 +16,10 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Pathao Courier - Fast & Reliable Parcel Delivery",
+  title: "Courier App - Fast & Reliable Parcel Delivery",
   description:
-    "Send parcels anywhere with Pathao Courier. Fast, reliable, and affordable delivery service with real-time tracking.",
-  generator: "v0.app",
+    "Send parcels anywhere with our courier service. Fast, reliable, and affordable delivery service with real-time tracking.",
+  generator: "Next.js",
 }
 
 export default function RootLayout({
@@ -30,13 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans ${inter.variable} ${GeistMono.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        {/* <ThemeProvider defaultTheme="system" > */}
           <I18nProvider>
-            <AuthProvider>
               <Suspense fallback={null}>{children}</Suspense>
-            </AuthProvider>
           </I18nProvider>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
         <Analytics />
       </body>
     </html>
