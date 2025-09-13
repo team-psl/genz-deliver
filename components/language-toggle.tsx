@@ -9,7 +9,7 @@ export function LanguageToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger >
+      <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
           <Languages className="h-4 w-4" />
           <span className="text-xs">{language === "en" ? "EN" : "বাং"}</span>

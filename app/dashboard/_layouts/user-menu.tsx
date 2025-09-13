@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   ChevronUp,
   LogOut,
@@ -17,50 +18,99 @@ import {
   Settings,
   Shield,
   HelpCircle,
+  ChevronsUpDown,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { UserAvatar } from "@/components/user-avatar";
 
-interface UserMenuProps {
-  user?: {
-    name: string;
-    email: string;
-    avatar?: string;
-    initials: string;
-  };
-}
-
-const defaultUser = {
-  name: "John Doe",
-  email: "john@example.com",
-  avatar: "/placeholder-user.jpg",
-  initials: "JD",
+// Helper function to get user initials
+const getUserInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 };
 
-export function UserMenu({ user = defaultUser }: UserMenuProps) {
-  const router = useRouter()
+// Skeleton loading component
+const UserMenuSkeleton = () => (
+  <SidebarMenuButton size="lg" className="cursor-not-allowed">
+    <Skeleton className="h-8 w-8 rounded-lg" />
+    <div className="grid flex-1 text-left text-sm leading-tight gap-1">
+      <Skeleton className="h-4 w-24" />
+      <Skeleton className="h-3 w-32" />
+    </div>
+    <ChevronUp className="ml-auto size-4 text-sidebar-foreground/70" />
+  </SidebarMenuButton>
+);
+
+export function UserMenu() {
+  const router = useRouter();
+  const { data: sessionData, error, isPending } = authClient.useSession();
+
+  const user = sessionData?.user;
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+      authClient.signOut();
+      window.location.href = "/sign-in";
+    }
+  }, [error]);
+
+  const userInitials = getUserInitials(user?.name || "User");
+
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (error) => {
+          console.error("Logout failed:", error);
+        },
+      },
+    });
+  };
+
+  // Show skeleton while loading
+  if (isPending || user === undefined) {
+    return <UserMenuSkeleton />;
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <SidebarMenuButton
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all duration-200"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
         >
-          <Avatar className="h-8 w-8 rounded-lg ring-2 ring-primary/20">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
-              {user.initials}
-            </AvatarFallback>
-          </Avatar>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold text-sidebar-foreground">
-              {user.name}
-            </span>
-            <span className="truncate text-xs text-sidebar-foreground/70">
-              {user.email}
-            </span>
-          </div>
-          <ChevronUp className="ml-auto size-4 text-sidebar-foreground/70 transition-transform duration-200 group-data-[state=open]/menu-item:rotate-180" />
+          {isPending ? (
+            <UserMenuSkeleton />
+          ) : (
+            <>
+              <Avatar className="h-10 w-10 rounded-lg ring-2 ring-primary/20">
+                <AvatarImage
+                  src={user?.image || "/placeholder-user.jpg"}
+                  alt={user?.name || "User"}
+                />
+                <AvatarFallback className="rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
+                  {userInitials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-bold font-nunito">
+                  {user?.name}
+                </span>
+                <span className="truncate text-xs">{user?.email}</span>
+              </div>
+              <ChevronsUpDown className="ml-auto size-4" />
+            </>
+          )}
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -73,15 +123,20 @@ export function UserMenu({ user = defaultUser }: UserMenuProps) {
         <DropdownMenuLabel className="p-0 font-normal mb-2">
           <div className="flex items-center gap-3 px-3 py-3 rounded-lg bg-muted/50">
             <Avatar className="h-10 w-10 rounded-lg ring-2 ring-primary/20">
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage
+                src={user?.image || "/placeholder-user.jpg"}
+                alt={user?.name || "User"}
+              />
               <AvatarFallback className="rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
-                {user.initials}
+                {userInitials}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left">
-              <span className="font-semibold text-sm">{user.name}</span>
+              <span className="font-semibold text-sm">
+                {user?.name || "User"}
+              </span>
               <span className="text-xs text-muted-foreground">
-                {user.email}
+                {user?.email || "user@example.com"}
               </span>
             </div>
           </div>
@@ -93,10 +148,7 @@ export function UserMenu({ user = defaultUser }: UserMenuProps) {
             asChild
             className="px-3 py-2 rounded-lg cursor-pointer hover:bg-muted/80 transition-colors"
           >
-            <Link
-              href="/dashboard/profile"
-              className="flex items-center gap-3"
-            >
+            <Link href="/dashboard/profile" className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/10">
                 <UserCircle className="h-4 w-4 text-blue-600" />
               </div>
@@ -161,9 +213,7 @@ export function UserMenu({ user = defaultUser }: UserMenuProps) {
                 <HelpCircle className="h-4 w-4 text-cyan-600" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-medium">
-                  Help & Support
-                </div>
+                <div className="text-sm font-medium">Help & Support</div>
                 <div className="text-xs text-muted-foreground">
                   Get assistance
                 </div>
@@ -175,9 +225,10 @@ export function UserMenu({ user = defaultUser }: UserMenuProps) {
         <DropdownMenuSeparator className="my-2" />
 
         {/* Logout */}
-        <DropdownMenuItem onSelect={()=>{
-            router.push("/")
-        }} className="px-3 py-2 rounded-lg cursor-pointer hover:bg-red-500/10 hover:text-red-600 transition-colors">
+        <DropdownMenuItem
+          onSelect={handleLogout}
+          className="px-3 py-2 rounded-lg cursor-pointer hover:bg-red-500/10 hover:text-red-600 transition-colors"
+        >
           <div className="flex items-center gap-3 w-full">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500/10">
               <LogOut className="h-4 w-4 text-red-600" />

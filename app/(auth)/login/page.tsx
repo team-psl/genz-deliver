@@ -7,18 +7,31 @@ import { ArrowLeft } from "lucide-react"
 import BrandLogo from "@/components/brand-logo"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
+import { toast } from "sonner"
 
 export default function LoginPage() {
-  const router = useRouter()
-  const handleSocialLogin = async (provider: "google" | "facebook") => {
-    router.push("/dashboard")
+  const handleGoogleLogin = async () => {
     try {
-      // In a real app, this would handle the OAuth flow
-      console.log(`Logging in with ${provider}`)
-      // You would integrate with your auth provider here
+       await authClient.signIn.social({
+        provider: "google",
+        errorCallbackURL: '/login',
+        callbackURL: "/dashboard",
+        fetchOptions: {
+          onError: (error) => {
+            console.error(`google login failed:`, error)
+            toast.error("Login failed, please try again")
+          },
+        }
+      });
     } catch (error) {
-      console.error(`${provider} login failed:`, error)
+      console.error(`google login failed:`, error)
+      toast.error("Login failed, please try again")
     }
+  }
+
+  const handleFacebookLogin = async () => {
+    console.log("facebook login")
   }
 
   return (
@@ -63,7 +76,7 @@ export default function LoginPage() {
                 variant="outline"
                 size="lg"
                 className="w-full h-12 text-sm font-medium bg-background hover:bg-muted/50 border-2 hover:border-primary/20 transition-all duration-200"
-                onClick={() => handleSocialLogin("google")}
+                onClick={() => handleGoogleLogin()}
               >
                 <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -91,7 +104,7 @@ export default function LoginPage() {
                 variant="outline"
                 size="lg"
                 className="w-full h-12 text-sm font-medium bg-background hover:bg-muted/50 border-2 hover:border-primary/20 transition-all duration-200"
-                onClick={() => handleSocialLogin("facebook")}
+                onClick={() => handleFacebookLogin()}
               >
                 <svg
                   className="mr-3 h-5 w-5"
