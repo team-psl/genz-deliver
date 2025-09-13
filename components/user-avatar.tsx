@@ -4,9 +4,14 @@ import { memo } from "react";
 export const UserAvatar = memo(
   ({ name, image }: { name: string; image: string }) => {
     return (
-      <Avatar className="h-8 w-8 rounded-full">
-        <AvatarImage src={image ?? ""} alt={name ?? ""} />
-        <AvatarFallback className="rounded-lg">{name}</AvatarFallback>
+      <Avatar className="h-8 w-8 rounded-lg ring-2 ring-primary/20">
+        <AvatarImage
+          src={image || "/placeholder-user.jpg"}
+          alt={name || "User"}
+        />
+        <AvatarFallback className="rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
+          {name}
+        </AvatarFallback>
       </Avatar>
     );
   },
