@@ -6,9 +6,12 @@ import { Separator } from "@/components/ui/separator"
 import { ArrowLeft } from "lucide-react"
 import BrandLogo from "@/components/brand-logo"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
+  const router = useRouter()
   const handleSocialLogin = async (provider: "google" | "facebook") => {
+    router.push("/dashboard")
     try {
       // In a real app, this would handle the OAuth flow
       console.log(`Logging in with ${provider}`)

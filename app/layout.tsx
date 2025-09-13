@@ -4,8 +4,6 @@ import { Inter } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import { AuthProvider } from "@/lib/auth"
-import { ThemeProvider } from "@/lib/theme-provider"
 import { I18nProvider } from "@/lib/i18n-provider"
 import "./globals.css"
 

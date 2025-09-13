@@ -1,185 +1,233 @@
-"use client"
-
-import { useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { OrdersTable } from "@/components/orders-table"
-import { OrderTrackingModal } from "@/components/order-tracking-modal"
-import { useAuth } from "@/lib/auth"
-import { Package, Plus, Search, TrendingUp, Clock, CheckCircle } from "lucide-react"
-import Link from "next/link"
-import { redirect } from "next/navigation"
+import { 
+  Package, 
+  Truck, 
+  Users, 
+  TrendingUp,
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  DollarSign,
+  ArrowUpRight,
+  ArrowDownRight
+} from "lucide-react"
 
-// Mock orders data
-const mockOrders = [
+const stats = [
   {
-    id: "ORD-001",
-    recipientName: "John Doe",
-    recipientPhone: "01712345678",
-    pickupAddress: "Dhanmondi 27, Dhaka",
-    deliveryAddress: "Gulshan 2, Dhaka",
-    status: "delivered",
-    amount: 150,
-    createdAt: "2024-01-15T10:30:00Z",
-    deliveredAt: "2024-01-15T16:45:00Z",
-    trackingHistory: [
-      { status: "Order confirmed", timestamp: "2024-01-15T10:30:00Z" },
-      { status: "Picked up", timestamp: "2024-01-15T11:15:00Z" },
-      { status: "In transit", timestamp: "2024-01-15T13:20:00Z" },
-      { status: "Out for delivery", timestamp: "2024-01-15T15:30:00Z" },
-      { status: "Delivered", timestamp: "2024-01-15T16:45:00Z" },
-    ],
+    title: "Total Orders",
+    value: "1,234",
+    change: "+12.5%",
+    trend: "up",
+    icon: Package,
+    description: "Orders this month"
   },
   {
-    id: "ORD-002",
-    recipientName: "Sarah Ahmed",
-    recipientPhone: "01798765432",
-    pickupAddress: "Uttara Sector 7, Dhaka",
-    deliveryAddress: "Banani, Dhaka",
+    title: "Active Deliveries",
+    value: "89",
+    change: "+5.2%", 
+    trend: "up",
+    icon: Truck,
+    description: "Currently in transit"
+  },
+  {
+    title: "Total Customers",
+    value: "567",
+    change: "+8.1%",
+    trend: "up", 
+    icon: Users,
+    description: "Active customers"
+  },
+  {
+    title: "Revenue",
+    value: "$12,345",
+    change: "-2.3%",
+    trend: "down",
+    icon: DollarSign,
+    description: "This month"
+  }
+]
+
+const recentOrders = [
+  {
+    id: "ORD-001",
+    customer: "John Smith",
+    status: "delivered",
+    amount: "$45.99",
+    date: "2 hours ago"
+  },
+  {
+    id: "ORD-002", 
+    customer: "Sarah Johnson",
     status: "in-transit",
-    amount: 200,
-    createdAt: "2024-01-16T09:15:00Z",
-    trackingHistory: [
-      { status: "Order confirmed", timestamp: "2024-01-16T09:15:00Z" },
-      { status: "Picked up", timestamp: "2024-01-16T10:30:00Z" },
-      { status: "In transit", timestamp: "2024-01-16T12:45:00Z" },
-    ],
+    amount: "$32.50",
+    date: "4 hours ago"
   },
   {
     id: "ORD-003",
-    recipientName: "Mohammad Rahman",
-    recipientPhone: "01634567890",
-    pickupAddress: "Mirpur 10, Dhaka",
-    deliveryAddress: "Old Dhaka, Dhaka",
+    customer: "Mike Davis", 
     status: "pending",
-    amount: 120,
-    createdAt: "2024-01-17T14:20:00Z",
-    trackingHistory: [{ status: "Order confirmed", timestamp: "2024-01-17T14:20:00Z" }],
+    amount: "$78.25",
+    date: "6 hours ago"
   },
   {
     id: "ORD-004",
-    recipientName: "Fatima Khan",
-    recipientPhone: "01556789012",
-    pickupAddress: "Wari, Dhaka",
-    deliveryAddress: "Tejgaon, Dhaka",
-    status: "out-for-delivery",
-    amount: 180,
-    createdAt: "2024-01-17T11:00:00Z",
-    trackingHistory: [
-      { status: "Order confirmed", timestamp: "2024-01-17T11:00:00Z" },
-      { status: "Picked up", timestamp: "2024-01-17T12:15:00Z" },
-      { status: "In transit", timestamp: "2024-01-17T14:30:00Z" },
-      { status: "Out for delivery", timestamp: "2024-01-17T16:00:00Z" },
-    ],
-  },
+    customer: "Emily Brown",
+    status: "delivered", 
+    amount: "$56.75",
+    date: "8 hours ago"
+  }
 ]
 
+function getStatusBadge(status: string) {
+  switch (status) {
+    case "delivered":
+      return <Badge className="bg-green-100 text-green-800 hover:bg-green-100"><CheckCircle className="w-3 h-3 mr-1" />Delivered</Badge>
+    case "in-transit":
+      return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100"><Truck className="w-3 h-3 mr-1" />In Transit</Badge>
+    case "pending":
+      return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100"><Clock className="w-3 h-3 mr-1" />Pending</Badge>
+    default:
+      return <Badge variant="secondary">{status}</Badge>
+  }
+}
+
 export default function DashboardPage() {
-  const { user } = useAuth()
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedOrder, setSelectedOrder] = useState<(typeof mockOrders)[0] | null>(null)
-
-  if (!user) {
-    redirect("/")
-  }
-
-  const filteredOrders = mockOrders.filter(
-    (order) =>
-      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.recipientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.recipientPhone.includes(searchTerm),
-  )
-
-  const stats = {
-    total: mockOrders.length,
-    delivered: mockOrders.filter((o) => o.status === "delivered").length,
-    pending: mockOrders.filter((o) => o.status === "pending").length,
-    inTransit: mockOrders.filter((o) => o.status === "in-transit" || o.status === "out-for-delivery").length,
-  }
-
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome back, {user?.name || "User"}</p>
-          </div>
-          <Link href="/create-order">
-            <Button size="lg" className="gap-2">
-              <Plus className="h-4 w-4" />
-              Create New Order
-            </Button>
-          </Link>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Welcome back! Here's what's happening with your courier service today.
+          </p>
         </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-              <Package className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.total}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Delivered</CardTitle>
-              <CheckCircle className="h-4 w-4 text-green-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">{stats.delivered}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">In Transit</CardTitle>
-              <TrendingUp className="h-4 w-4 text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{stats.inTransit}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending</CardTitle>
-              <Clock className="h-4 w-4 text-orange-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
-            </CardContent>
-          </Card>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Clock className="w-4 h-4 mr-2" />
+            Schedule Pickup
+          </Button>
+          <Button>
+            <Package className="w-4 h-4 mr-2" />
+            Create Order
+          </Button>
         </div>
+      </div>
 
-        {/* Orders Table */}
-        <Card>
-          <CardHeader>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <CardTitle>Recent Orders</CardTitle>
-              <div className="relative w-full md:w-80">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search orders..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+      {/* Stats Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <Card key={stat.title}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                {stat.title}
+              </CardTitle>
+              <stat.icon className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                <span className={`flex items-center ${
+                  stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {stat.trend === 'up' ? (
+                    <ArrowUpRight className="w-3 h-3 mr-1" />
+                  ) : (
+                    <ArrowDownRight className="w-3 h-3 mr-1" />
+                  )}
+                  {stat.change}
+                </span>
+                <span>{stat.description}</span>
               </div>
-            </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        {/* Recent Orders */}
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Recent Orders</CardTitle>
+            <CardDescription>
+              Latest courier orders and their current status
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <OrdersTable orders={filteredOrders} onOrderClick={(order) => setSelectedOrder(order)} />
+            <div className="space-y-4">
+              {recentOrders.map((order) => (
+                <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div>
+                      <p className="font-medium">{order.id}</p>
+                      <p className="text-sm text-muted-foreground">{order.customer}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    {getStatusBadge(order.status)}
+                    <div className="text-right">
+                      <p className="font-medium">{order.amount}</p>
+                      <p className="text-sm text-muted-foreground">{order.date}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Button variant="outline" className="w-full">
+                View All Orders
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Order Tracking Modal */}
-        {selectedOrder && (
-          <OrderTrackingModal order={selectedOrder} isOpen={!!selectedOrder} onClose={() => setSelectedOrder(null)} />
-        )}
+        {/* Quick Stats */}
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Quick Stats</CardTitle>
+            <CardDescription>
+              Key performance indicators
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span className="text-sm">Delivered Today</span>
+              </div>
+              <span className="font-bold">23</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Truck className="w-4 h-4 text-blue-600" />
+                <span className="text-sm">In Transit</span>
+              </div>
+              <span className="font-bold">89</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Clock className="w-4 h-4 text-yellow-600" />
+                <span className="text-sm">Pending Pickup</span>
+              </div>
+              <span className="font-bold">12</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <AlertTriangle className="w-4 h-4 text-red-600" />
+                <span className="text-sm">Delayed</span>
+              </div>
+              <span className="font-bold">3</span>
+            </div>
+            <div className="pt-2 border-t">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Success Rate</span>
+                <span className="font-bold text-green-600">96.2%</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
