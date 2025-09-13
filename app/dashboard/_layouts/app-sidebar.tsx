@@ -125,8 +125,8 @@ export function AppSidebar() {
                     tooltip={item.title}
                   >
                     <Link href={item.url}>
-                      <item.icon className={cn(item.isActive ? "text-primary" : "text-muted-foreground")} />
-                      <span className={cn(item.isActive ? "text-primary" : "text-muted-foreground")}>{item.title}</span>
+                      <item.icon className={cn(item.isActive ? "text-primary" : "text-foreground")} />
+                      <span className={cn(item.isActive ? "text-primary" : "text-foreground")}>{item.title}</span>
                       {item.badge && (
                         <span className="ml-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                           {item.badge}
@@ -148,7 +148,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={action.title}>
                   <SidebarMenuButton asChild tooltip={action.title}>
                     <Link href={action.url}>
-                      <action.icon className={cn(action.isActive ? "text-primary" : "text-muted-foreground")} />
+                      <action.icon className={cn(action.isActive ? "text-primary" : "text-foreground")} />
                       <span>{action.title}</span>
                     </Link>
                   </SidebarMenuButton>
