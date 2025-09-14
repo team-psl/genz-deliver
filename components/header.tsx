@@ -79,7 +79,7 @@ export function Header() {
             
             <LanguageToggle />
             <Link
-              href="/login"
+              href="/dashboard/orders/new"
               className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-medium transition-all duration-200 hover:shadow-lg text-sm"
             >
               <Package className="h-4 w-4 mr-2" />
@@ -143,7 +143,7 @@ export function Header() {
                   <LanguageToggle />
                 </div>
                 <Link
-                  href="/login"
+                  href="/dashboard/orders/new"
                   onClick={() => setIsMenuOpen(false)}
                   className="w-full inline-flex justify-center items-center bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-medium py-3 px-6 text-sm"
                 >

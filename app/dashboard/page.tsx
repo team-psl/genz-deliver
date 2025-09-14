@@ -31,22 +31,22 @@ const stats = [
     icon: Truck,
     description: "Currently in transit"
   },
-  {
-    title: "Total Customers",
-    value: "567",
-    change: "+8.1%",
-    trend: "up", 
-    icon: Users,
-    description: "Active customers"
-  },
-  {
-    title: "Revenue",
-    value: "$12,345",
-    change: "-2.3%",
-    trend: "down",
-    icon: DollarSign,
-    description: "This month"
-  }
+  // {
+  //   title: "Total Customers",
+  //   value: "567",
+  //   change: "+8.1%",
+  //   trend: "up", 
+  //   icon: Users,
+  //   description: "Active customers"
+  // },
+  // {
+  //   title: "Revenue",
+  //   value: "$12,345",
+  //   change: "-2.3%",
+  //   trend: "down",
+  //   icon: DollarSign,
+  //   description: "This month"
+  // }
 ]
 
 const recentOrders = [

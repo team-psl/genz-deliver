@@ -55,7 +55,7 @@ export function HeroSection() {
              {/* CTA Buttons */}
              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                <a
-                 href="/login"
+                 href="/dashboard/orders/new"
                  className="inline-flex items-center text-sm px-8 py-3 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                >
                  <Calculator className="mr-2 h-4 w-4" />

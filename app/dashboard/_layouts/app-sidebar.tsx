@@ -149,7 +149,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild tooltip={action.title}>
                     <Link href={action.url}>
                       <action.icon className={cn(action.isActive ? "text-primary" : "text-foreground")} />
-                      <span>{action.title}</span>
+                      <span className={cn(action.isActive ? "text-primary" : "text-foreground")}>{action.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

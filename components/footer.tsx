@@ -33,7 +33,7 @@ export function Footer() {
               <a href="#calculate-section" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
                 Calculate Price
               </a>
-              <Link href="/login" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
+              <Link href="/dashboard/orders/new" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
                 Book Now
               </Link>
               <a href="#faq-section" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
