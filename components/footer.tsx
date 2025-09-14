@@ -72,7 +72,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="border-t border-secondary-foreground/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary-foreground/70">
-            <p>© 2024 Courier Service. All rights reserved.</p>
+            <p>© 2025 Courier Service. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="/privacy" className="hover:text-secondary-foreground transition-colors">
                 Privacy Policy
