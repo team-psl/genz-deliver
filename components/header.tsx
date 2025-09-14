@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { LanguageToggle } from "@/components/language-toggle"
 import { Menu, X, Package  } from "lucide-react"
 import BrandLogo from "./brand-logo"
+import GenZLogo from "./genz-logo"
 
 // Menu item type definition
 interface MenuItem {
@@ -44,7 +45,8 @@ export function Header() {
           <div className="flex items-center space-x-8">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              <BrandLogo className="w-[125px]" mode="light" />
+              {/* <BrandLogo className="w-[125px]" mode="light" /> */}
+              <GenZLogo className="w-[125px]" mode="light" />
             </Link>
 
             {/* Desktop Navigation */}
