@@ -79,9 +79,10 @@ export function Header() {
             {/* Separator */}
             <div className="h-4 w-px bg-border"></div>
             
+            {/* href="/dashboard/orders/new" */}
             <LanguageToggle />
             <Link
-              href="/dashboard/orders/new"
+              href="/login"
               className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-medium transition-all duration-200 hover:shadow-lg text-sm"
             >
               <Package className="h-4 w-4 mr-2" />

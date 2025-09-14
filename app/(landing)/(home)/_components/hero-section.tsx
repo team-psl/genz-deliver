@@ -34,28 +34,29 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium backdrop-blur-sm">
               <Truck className="h-3 w-3" />
-              #1 Trusted Courier Service in Bangladesh
+              #1 Trusted Courier Service in Milky Way
             </div>
 
             {/* Hero Content */}
             <div className="space-y-4">
               <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Deliver Anywhere,
+                Best Delivery in Entire,
                 <br />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                  Anytime
+                  Galaxy
                 </span>
               </h1>
               <p className="text-base md:text-lg md:text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Experience Bangladesh's most reliable courier service. Track packages in real-time, 
-                get instant pricing, and enjoy doorstep delivery across the country.
+                Experience Inter Galactic most reliable courier service. Track packages in real-time, 
+                get instant pricing, and enjoy doorstep delivery across the galaxy.
               </p>
             </div>
 
+               {/* //  href="/dashboard/orders/new" */}
              {/* CTA Buttons */}
              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                <a
-                 href="/dashboard/orders/new"
+                 href="/login"
                  className="inline-flex items-center text-sm px-8 py-3 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                >
                  <Calculator className="mr-2 h-4 w-4" />

@@ -109,9 +109,11 @@ export default function DashboardPage() {
             <Clock className="w-4 h-4 mr-2" />
             Schedule Pickup
           </Button>
-          <Button>
-            <Package className="w-4 h-4 mr-2" />
-            Create Order
+          <Button asChild>
+            <a href="/dashboard/orders/new">
+              <Package className="w-4 h-4 mr-2" />
+              Create Order
+            </a>
           </Button>
         </div>
       </div>
