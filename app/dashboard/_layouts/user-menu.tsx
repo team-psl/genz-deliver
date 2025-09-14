@@ -30,9 +30,9 @@ import { UserAvatar } from "@/components/user-avatar";
 // Helper function to get user initials
 const getUserInitials = (name: string) => {
   return name
-    .split(' ')
-    .map(word => word.charAt(0))
-    .join('')
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("")
     .toUpperCase()
     .slice(0, 2);
 };
@@ -84,35 +84,27 @@ export function UserMenu() {
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <SidebarMenuButton
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
+          className="rounded-lg data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          {isPending ? (
-            <UserMenuSkeleton />
-          ) : (
-            <>
-              <Avatar className="h-10 w-10 rounded-lg ring-2 ring-primary/20">
-                <AvatarImage
-                  src={user?.image || "/placeholder-user.jpg"}
-                  alt={user?.name || "User"}
-                />
-                <AvatarFallback className="rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
-                  {userInitials}
-                </AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-bold font-nunito">
-                  {user?.name}
-                </span>
-                <span className="truncate text-xs">{user?.email}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
-            </>
-          )}
+          <Avatar className="size-8 rounded-full">
+            <AvatarImage src={user?.image ?? ""} alt={user?.name} />
+            <AvatarFallback className="rounded-full bg-primary/20">
+              {user?.name.charAt(0) ?? ""}
+            </AvatarFallback>
+          </Avatar>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-semibold">{user?.name}</span>
+            <span className="truncate text-xs text-muted-foreground">
+              {user?.email}
+            </span>
+          </div>
+          <ChevronsUpDown className="ml-auto size-4 opacity-70" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent
         className="w-[250px] mb-2 p-2 rounded-xl shadow-lg bg-background/95 backdrop-blur-md"
         side="left"
@@ -132,11 +124,11 @@ export function UserMenu() {
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left">
-              <span className="font-semibold text-sm">
-                {user?.name || "User"}
+              <span className="font-semibold text-sm truncate">
+                {user?.name }
               </span>
-              <span className="text-xs text-muted-foreground">
-                {user?.email || "user@example.com"}
+              <span className="text-xs text-muted-foreground truncate">
+                {user?.email }
               </span>
             </div>
           </div>
