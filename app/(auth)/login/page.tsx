@@ -1,38 +1,43 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { ArrowLeft } from "lucide-react"
-import BrandLogo from "@/components/brand-logo"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { authClient } from "@/lib/auth-client"
-import { toast } from "sonner"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { ArrowLeft } from "lucide-react";
+import BrandLogo from "@/components/brand-logo";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
-       await authClient.signIn.social({
+      await authClient.signIn.social({
         provider: "google",
-        errorCallbackURL: '/login',
+        errorCallbackURL: "/login",
         callbackURL: "/dashboard",
         fetchOptions: {
           onError: (error) => {
-            console.error(`google login failed:`, error)
-            toast.error("Login failed, please try again")
+            console.error(`google login failed:`, error);
+            toast.error("Login failed, please try again");
           },
-        }
+        },
       });
     } catch (error) {
-      console.error(`google login failed:`, error)
-      toast.error("Login failed, please try again")
+      console.error(`google login failed:`, error);
+      toast.error("Login failed, please try again");
     }
-  }
+  };
 
   const handleFacebookLogin = async () => {
-    console.log("facebook login")
-  }
+    console.log("facebook login");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4 relative">
