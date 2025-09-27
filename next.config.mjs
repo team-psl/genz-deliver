@@ -5,8 +5,8 @@ const nextConfig = {
     const rewrites = [];
 
     if(process.env.NODE_ENV === "development") {
-      console.log("API DOCS URL", process.env.NEXT_PUBLIC_API_URL + "/docs");
-      console.log("API AUTH DOCS URL", process.env.NEXT_PUBLIC_API_URL + "/api/auth/reference");
+      console.log("API DOCS URL", process.env.NEXT_PUBLIC_BASE_URL + "/api/reference");
+      console.log("API AUTH DOCS URL", process.env.NEXT_PUBLIC_BASE_URL + "/api/auth/reference");
     }
 
     rewrites.push({
