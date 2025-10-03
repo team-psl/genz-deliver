@@ -22,6 +22,13 @@
       "when": 1759493476338,
       "tag": "0002_easy_slayback",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759511323546,
+      "tag": "0003_great_strong_guy",
+      "breakpoints": true
     }
   ]
 }
