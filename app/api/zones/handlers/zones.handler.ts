@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { zones } from "@/db/schemas/zones.schema";
 import { createZoneSchema, type CreateZoneResponse, type GetZonesResponse, type ErrorResponse } from "../types/zones.types";
@@ -50,13 +51,19 @@ export async function createZone(request: NextRequest) {
   }
 }
 
-export async function getZones() {
+export async function getZones(request: NextRequest) {
   try {
-    const allZones = await db.select().from(zones);
+    const { searchParams } = new URL(request.url);
+    const cityId = searchParams.get('city_id');
+    
+    // Filter by city_id if provided
+    const zonesData = cityId 
+      ? await db.select().from(zones).where(eq(zones.cityId, parseInt(cityId)))
+      : await db.select().from(zones);
     
     const response: GetZonesResponse = {
       success: true,
-      data: allZones,
+      data: zonesData,
     };
     
     return NextResponse.json(response, { status: 200 });
