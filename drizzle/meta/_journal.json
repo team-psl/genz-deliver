@@ -15,6 +15,13 @@
       "when": 1759491797599,
       "tag": "0001_gorgeous_the_twelve",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759493476338,
+      "tag": "0002_easy_slayback",
+      "breakpoints": true
     }
   ]
 }
