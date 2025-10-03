@@ -1,3 +1,3 @@
 import { pgSchema } from "drizzle-orm/pg-core";
 
-export const authSchema = pgSchema("corier-web-auth");
+export const authSchema = pgSchema("courier-web-auth");

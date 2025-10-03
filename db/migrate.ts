@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import '@/configs/env';
+import 'dotenv/config';
 
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { resolve } from 'node:path';
 
-import { db, pool } from '@/db';
+import { db, pool } from './index';
 
 async function run() {
   console.log('🚀 Starting database migration...');
