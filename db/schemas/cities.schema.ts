@@ -1,13 +1,13 @@
-import { 
-  serial, 
-  varchar, 
-  integer, 
-  smallint, 
-  timestamp 
+import {
+  serial,
+  varchar,
+  integer,
+  smallint,
+  timestamp,
 } from "drizzle-orm/pg-core";
-import { genzSchema } from "./table.schema";
+import { genzDeliverSchema } from "./table.schema";
 
-export const cities = genzSchema.table("cities", {
+export const cities = genzDeliverSchema.table("cities", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   slug: varchar("slug", { length: 100 }),
@@ -16,6 +16,9 @@ export const cities = genzSchema.table("cities", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() =>  new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export type City = typeof cities.$inferSelect;
+export type NewCity = typeof cities.$inferInsert;

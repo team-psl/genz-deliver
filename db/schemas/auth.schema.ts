@@ -1,7 +1,7 @@
 import { text, timestamp, boolean } from "drizzle-orm/pg-core";
-import { authSchema } from "./table.schema";
+import { genzDeliverSchema } from "./table.schema";
 
-export const user = authSchema.table("user", {
+export const user = genzDeliverSchema.table("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -10,17 +10,17 @@ export const user = authSchema.table("user", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() =>  new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
 });
 
-export const session = authSchema.table("session", {
+export const session = genzDeliverSchema.table("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
   token: text("token").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
-    .$onUpdate(() =>  new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
   ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
@@ -29,7 +29,7 @@ export const session = authSchema.table("session", {
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const account = authSchema.table("account", {
+export const account = genzDeliverSchema.table("account", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
   providerId: text("provider_id").notNull(),
@@ -45,11 +45,11 @@ export const account = authSchema.table("account", {
   password: text("password"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
-    .$onUpdate(() =>  new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
 });
 
-export const verification = authSchema.table("verification", {
+export const verification = genzDeliverSchema.table("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
@@ -57,11 +57,11 @@ export const verification = authSchema.table("verification", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() =>  new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
 });
 
-export const jwks = authSchema.table("jwks", {
+export const jwks = genzDeliverSchema.table("jwks", {
   id: text("id").primaryKey(),
   publicKey: text("public_key").notNull(),
   privateKey: text("private_key").notNull(),

@@ -28,18 +28,24 @@ import {
 const FormSchema = z.object({
   // Recipient Information
   recipient_name: z.string().min(1, { message: "Recipient name is required" }),
-  recipient_phone: z.string().min(1, { message: "Recipient phone is required" }),
-  recipient_address: z.string().min(1, { message: "Recipient address is required" }),
+  recipient_phone: z
+    .string()
+    .min(1, { message: "Recipient phone is required" }),
+  recipient_address: z
+    .string()
+    .min(1, { message: "Recipient address is required" }),
   additional_info: z.string().optional(),
   recipient_city: z.number().min(1, { message: "Recipient city is required" }),
   recipient_zone: z.number().min(1, { message: "Recipient zone is required" }),
   recipient_area: z.number().min(1, { message: "Recipient area is required" }),
-  
+
   // Parcel Information
   parcel_type: z.number().min(1, { message: "Parcel type is required" }),
-  parcel_weight: z.number().min(0.1, { message: "Parcel weight must be at least 0.1 kg" }),
+  parcel_weight: z
+    .number()
+    .min(0.1, { message: "Parcel weight must be at least 0.1 kg" }),
   parcel_value: z.number().min(1, { message: "Parcel value is required" }),
-  
+
   // Pickup Information
   pickup_type: z.number().min(1, { message: "Pickup type is required" }),
   pickup_lat: z.number().min(-90).max(90, { message: "Invalid latitude" }),
@@ -72,7 +78,7 @@ export default function NewOrderForm() {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log("Order Creation Payload:", JSON.stringify(data, null, 2));
-    
+
     toast("Order Created Successfully!", {
       description: (
         <div className="mt-2">
@@ -80,9 +86,12 @@ export default function NewOrderForm() {
             Check console for complete payload
           </p>
           <div className="text-xs bg-muted p-2 rounded">
-            <strong>Recipient:</strong> {data.recipient_name}<br/>
-            <strong>Phone:</strong> {data.recipient_phone}<br/>
-            <strong>Weight:</strong> {data.parcel_weight}kg<br/>
+            <strong>Recipient:</strong> {data.recipient_name}
+            <br />
+            <strong>Phone:</strong> {data.recipient_phone}
+            <br />
+            <strong>Weight:</strong> {data.parcel_weight}kg
+            <br />
             <strong>Value:</strong> ৳{data.parcel_value}
           </div>
         </div>
@@ -92,10 +101,15 @@ export default function NewOrderForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-4xl space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="max-w-4xl space-y-8"
+      >
         {/* Recipient Information Section */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Recipient Information</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            Recipient Information
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -124,7 +138,7 @@ export default function NewOrderForm() {
               )}
             />
           </div>
-          
+
           <FormField
             control={form.control}
             name="recipient_address"
@@ -142,7 +156,7 @@ export default function NewOrderForm() {
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="additional_info"
@@ -163,7 +177,7 @@ export default function NewOrderForm() {
               </FormItem>
             )}
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
               control={form.control}
@@ -192,7 +206,7 @@ export default function NewOrderForm() {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="recipient_zone"
@@ -218,7 +232,7 @@ export default function NewOrderForm() {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="recipient_area"
@@ -251,7 +265,9 @@ export default function NewOrderForm() {
 
         {/* Parcel Information Section */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Parcel Information</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            Parcel Information
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
               control={form.control}
@@ -279,7 +295,7 @@ export default function NewOrderForm() {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="parcel_weight"
@@ -292,14 +308,16 @@ export default function NewOrderForm() {
                       step="0.1"
                       placeholder="0.0"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        field.onChange(parseFloat(e.target.value))
+                      }
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="parcel_value"
@@ -323,7 +341,9 @@ export default function NewOrderForm() {
 
         {/* Pickup Information Section */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Pickup Information</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            Pickup Information
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -350,7 +370,7 @@ export default function NewOrderForm() {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="pickup_address"
@@ -365,7 +385,7 @@ export default function NewOrderForm() {
               )}
             />
           </div>
-          
+
           <FormField
             control={form.control}
             name="pickup_direction"
@@ -380,13 +400,13 @@ export default function NewOrderForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Help the courier find your pickup location easily
+                  Help the delivery find your pickup location easily
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -400,14 +420,16 @@ export default function NewOrderForm() {
                       step="0.000001"
                       placeholder="23.000000"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        field.onChange(parseFloat(e.target.value))
+                      }
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="pickup_lon"
@@ -420,7 +442,9 @@ export default function NewOrderForm() {
                       step="0.000001"
                       placeholder="90.000000"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        field.onChange(parseFloat(e.target.value))
+                      }
                     />
                   </FormControl>
                   <FormMessage />

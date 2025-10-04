@@ -1,18 +1,24 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { 
-  Package, 
-  Truck, 
-  Users, 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Package,
+  Truck,
+  Users,
   TrendingUp,
   Clock,
   CheckCircle,
   AlertTriangle,
   DollarSign,
   ArrowUpRight,
-  ArrowDownRight
-} from "lucide-react"
+  ArrowDownRight,
+} from "lucide-react";
 
 const stats = [
   {
@@ -21,21 +27,21 @@ const stats = [
     change: "+12.5%",
     trend: "up",
     icon: Package,
-    description: "Orders this month"
+    description: "Orders this month",
   },
   {
     title: "Active Deliveries",
     value: "89",
-    change: "+5.2%", 
+    change: "+5.2%",
     trend: "up",
     icon: Truck,
-    description: "Currently in transit"
+    description: "Currently in transit",
   },
   // {
   //   title: "Total Customers",
   //   value: "567",
   //   change: "+8.1%",
-  //   trend: "up", 
+  //   trend: "up",
   //   icon: Users,
   //   description: "Active customers"
   // },
@@ -47,7 +53,7 @@ const stats = [
   //   icon: DollarSign,
   //   description: "This month"
   // }
-]
+];
 
 const recentOrders = [
   {
@@ -55,41 +61,56 @@ const recentOrders = [
     customer: "John Smith",
     status: "delivered",
     amount: "$45.99",
-    date: "2 hours ago"
+    date: "2 hours ago",
   },
   {
-    id: "ORD-002", 
+    id: "ORD-002",
     customer: "Sarah Johnson",
     status: "in-transit",
     amount: "$32.50",
-    date: "4 hours ago"
+    date: "4 hours ago",
   },
   {
     id: "ORD-003",
-    customer: "Mike Davis", 
+    customer: "Mike Davis",
     status: "pending",
     amount: "$78.25",
-    date: "6 hours ago"
+    date: "6 hours ago",
   },
   {
     id: "ORD-004",
     customer: "Emily Brown",
-    status: "delivered", 
+    status: "delivered",
     amount: "$56.75",
-    date: "8 hours ago"
-  }
-]
+    date: "8 hours ago",
+  },
+];
 
 function getStatusBadge(status: string) {
   switch (status) {
     case "delivered":
-      return <Badge className="bg-green-100 text-green-800 hover:bg-green-100"><CheckCircle className="w-3 h-3 mr-1" />Delivered</Badge>
+      return (
+        <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+          <CheckCircle className="w-3 h-3 mr-1" />
+          Delivered
+        </Badge>
+      );
     case "in-transit":
-      return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100"><Truck className="w-3 h-3 mr-1" />In Transit</Badge>
+      return (
+        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+          <Truck className="w-3 h-3 mr-1" />
+          In Transit
+        </Badge>
+      );
     case "pending":
-      return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100"><Clock className="w-3 h-3 mr-1" />Pending</Badge>
+      return (
+        <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+          <Clock className="w-3 h-3 mr-1" />
+          Pending
+        </Badge>
+      );
     default:
-      return <Badge variant="secondary">{status}</Badge>
+      return <Badge variant="secondary">{status}</Badge>;
   }
 }
 
@@ -101,7 +122,8 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">
-            Welcome back! Here's what's happening with your courier service today.
+            Welcome back! Here's what's happening with your delivery service
+            today.
           </p>
         </div>
         <div className="flex gap-2">
@@ -131,10 +153,12 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                <span className={`flex items-center ${
-                  stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {stat.trend === 'up' ? (
+                <span
+                  className={`flex items-center ${
+                    stat.trend === "up" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {stat.trend === "up" ? (
                     <ArrowUpRight className="w-3 h-3 mr-1" />
                   ) : (
                     <ArrowDownRight className="w-3 h-3 mr-1" />
@@ -154,24 +178,31 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle>Recent Orders</CardTitle>
             <CardDescription>
-              Latest courier orders and their current status
+              Latest delivery orders and their current status
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div
+                  key={order.id}
+                  className="flex items-center justify-between p-3 border rounded-lg"
+                >
                   <div className="flex items-center space-x-4">
                     <div>
                       <p className="font-medium">{order.id}</p>
-                      <p className="text-sm text-muted-foreground">{order.customer}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {order.customer}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     {getStatusBadge(order.status)}
                     <div className="text-right">
                       <p className="font-medium">{order.amount}</p>
-                      <p className="text-sm text-muted-foreground">{order.date}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {order.date}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -189,9 +220,7 @@ export default function DashboardPage() {
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Quick Stats</CardTitle>
-            <CardDescription>
-              Key performance indicators
-            </CardDescription>
+            <CardDescription>Key performance indicators</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
@@ -232,5 +261,5 @@ export default function DashboardPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

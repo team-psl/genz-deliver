@@ -4,7 +4,7 @@ import { CalculateDeliverySection } from "./_components/calculate-delivery-secti
 import { FeaturesSection } from "./_components/features-section";
 import { FAQSection } from "./_components/faq-section";
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <>
       <HeroSection />
